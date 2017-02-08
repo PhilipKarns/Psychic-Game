@@ -6,6 +6,9 @@
 //if user's letter doesn't match computer, reduce guesses left by 1
 //if guesses left is still > 0 go back to line 3, if = 0 add a loss and restart game
 
+
+//starting off game on page load
+
 var options = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
@@ -13,15 +16,30 @@ var wins = 0;
 var losses = 0;
 var guessesLeft = 9;
 
-
 //computer randomly selects a letter
 var computerSelection = options[Math.floor(Math.random()*options.length)];
-	console.log(computerSelection);
+                console.log(computerSelection);
 
-//number of guesses added to html
-var htmlGuessesLeft = "<p>Guesses Left: " + guessesLeft + "</p>";
-        document.querySelector("#guessesLeft").innerHTML = htmlGuessesLeft;
+        //number of guesses added to html
+        var htmlGuessesLeft = "<p>Guesses Left: " + guessesLeft + "</p>";
+                document.querySelector("#guessesLeft").innerHTML = htmlGuessesLeft;
 
+
+//does reset need some info to run?
+function reset() {
+        //reset chances
+         guessesLeft = 9;
+
+//computer randomly selects a letter
+        computerSelection = options[Math.floor(Math.random()*options.length)];
+        	console.log(computerSelection);
+
+        //number of guesses added to html
+        htmlGuessesLeft = "<p>Guesses Left: " + guessesLeft + "</p>";
+                document.querySelector("#guessesLeft").innerHTML = htmlGuessesLeft;
+
+                console.log('reset');
+}
 //user selects a letter
 document.onkeyup = function() {
         
@@ -34,13 +52,24 @@ document.onkeyup = function() {
         	wins++;
         var htmlWins = "<p>Wins: " + wins + "</p>";
         document.querySelector("#wins").innerHTML = htmlWins;
-        }
-
-        if (userGuess != computerSelection) {
-        	guessesLeft--;
-        	var htmlGuessesLeft = "<p>Guesses Left: " + guessesLeft + "</p>";
+                reset();
+        } else {
+                guessesLeft--;
+                var htmlGuessesLeft = "<p>Guesses Left: " + guessesLeft + "</p>";
         document.querySelector("#guessesLeft").innerHTML = htmlGuessesLeft;
-        }
 
+                if (guessesLeft === 0) {
+                //game is over
+                        losses++;
+                        //show to screen
+                                reset();
+
+                }
+        } 
+
+        
+        	
+        	
+        
 
 }
