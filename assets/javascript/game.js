@@ -8,13 +8,15 @@
 
 
 //starting off game on page load
+//
 
 var options = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
 var wins = 0;
 var losses = 0;
-var guessesLeft = 9;
+var guessesLeft = 10;
+var lettersGuessed = [];
 
 //computer randomly selects a letter
 var computerSelection = options[Math.floor(Math.random()*options.length)];
@@ -28,7 +30,10 @@ var computerSelection = options[Math.floor(Math.random()*options.length)];
 //does reset need some info to run?
 function reset() {
         //reset chances
-         guessesLeft = 9;
+         guessesLeft = 10;
+        lettersGuessed.splice(0,lettersGuessed.length);
+        var guessesMade = "<p>Your guesses so far: " + lettersGuessed + "</p>";
+            document.querySelector("#guessesMade").innerHTML = guessesMade;
 
 //computer randomly selects a letter
         computerSelection = options[Math.floor(Math.random()*options.length)];
@@ -48,6 +53,10 @@ document.onkeyup = function() {
         //prints the keystroke assigned to the variable name to the console
         console.log(userGuess);
 
+         lettersGuessed.push(userGuess);
+            var guessesMade = "<p>Your guesses so far: " + lettersGuessed + "</p>";
+            document.querySelector("#guessesMade").innerHTML = guessesMade;
+
         if (userGuess == computerSelection) {
         	wins++;
         var htmlWins = "<p>Wins: " + wins + "</p>";
@@ -60,7 +69,12 @@ document.onkeyup = function() {
 
                 if (guessesLeft === 0) {
                 //game is over
+                        lettersGuessed.length = 0
                         losses++;
+                        var htmlLosses = "<p>Losses: " + losses + "</p>";
+                        document.querySelector("#losses").innerHTML = htmlLosses;
+                        
+
                         //show to screen
                                 reset();
 
